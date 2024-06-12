@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // הגדרת הגישה ל-S3
-const awsConfig = require('../config/aws-config');
+const awsConfig = require('../config/aws-config.ts');
 const s3 = new AWS.S3(awsConfig);
 
 // פונקציה להעלאת קובץ ל-S3

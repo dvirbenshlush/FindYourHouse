@@ -8,7 +8,7 @@ exports.sendEmail = async (req, res) => {
     const date = new Date();
     const formattedDate = `${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}`;
     const fileName = `דירות_${formattedDate}.xlsx`;
-    const filePath = path.join(__dirname, '../../', fileName); // עדכן כאן את שם הקובץ ונתיבו
+    const filePath = path.join(__dirname, '../', fileName); // עדכן כאן את שם הקובץ ונתיבו
 
     // בדוק אם הקובץ קיים
     if (!fs.existsSync(filePath)) {
