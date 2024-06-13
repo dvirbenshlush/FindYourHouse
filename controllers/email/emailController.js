@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 const nodemailerConfig = require('../../config/nodemailerConfig.ts');
 const fs = require('fs');
 const path = require('path');
+const config = require('../../config/config.ts');
 
 exports.sendEmail = async (req, res) => {
   try {
@@ -21,8 +22,8 @@ exports.sendEmail = async (req, res) => {
 
     let transporter = nodemailer.createTransport(nodemailerConfig);
     let info = await transporter.sendMail({
-      from: process.env.GMAIL_USER,
-      to: process.env.RECEIVER_EMAIL,
+      from: config.GMAIL_USER,
+      to: config.RECEIVER_EMAIL,
       subject: 'Hello Mayol',
       text: 'How u doin? ;)',
       attachments: [
