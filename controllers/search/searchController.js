@@ -28,7 +28,8 @@ const flattenObject = (obj, parent = '', res = {}) => {
 exports.search = async (req, res) => {
     const url = "https://gw.yad2.co.il/feed-search-legacy/realestate/forsale";
     const params = {
-        // city: 8300,
+        Order: 3,
+        page: req.body.currentPage,
         topArea: 2,
         rooms: '2-4',
         price: '800000-1400000',
@@ -37,14 +38,7 @@ exports.search = async (req, res) => {
 
     try {
         const response = await axios.get(url, { params });
-
         let data = response.data.data.yad1Listing;
-        // Paginate the result and return a slice of 10 items by index
-        const pageIndex = req.body.currentPage; // Specify the page index (0-based)
-        const pageSize = 4; // Specify the page size
-        const startIndex = pageIndex * pageSize;
-        const endIndex = startIndex + pageSize;
-        const paginatedData = data.slice(startIndex, endIndex);
         // Ensure data is an array
         if (!Array.isArray(data)) {
             if (data && typeof data === 'object') {
@@ -68,8 +62,8 @@ exports.search = async (req, res) => {
         const filePath = path.join(__dirname, `../${fileName}`);
         // XLSX.writeFile(workbook, filePath);
         // const s3FilePath = await s3Service.uploadFileToS3(filePath, fileName);
-        const countOfPages = (data.length -1) % pageSize == 0 ? (data.length -1) / pageSize : Math.floor((data.length -1) / pageSize + 1);
-        res.json({ message: paginatedData, countOfPages:  countOfPages});
+        const totalitems = response.data.data.pagination.total_items
+        res.json({ housesArray: data, countOfPages:  totalitems });
 
     } catch (error) {
         console.error(error);
