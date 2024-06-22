@@ -28,7 +28,32 @@ const uploadFileToS3 = async (filePath, fileName) => {
   }
 };
 
-module.exports = { uploadFileToS3 };
+// פונקציה לקריאת כל הקבצים מ-S3
+const getAllFilesFromS3 = async () => {
+  try {
+    // הגדרות קריאה
+    const params = {
+      Bucket: 'baseonfiles'
+    };
+    const fileParams = [];
+    const data = await s3.listObjects(params).promise();
+    data.Contents.map(async (file) => {
+            fileParams.push({
+              Bucket: 'baseonfiles',
+              Key: file.Key
+            });
+          });
+    const fileData = await s3.getObject(fileParams[2]).promise();
+    console.log('File retrieved successfully:', fileParams[2].Key);
+    return {dataBody: fileData.Body, fileName: fileParams[2].Key};
+  } catch (error) {
+    console.error('Error retrieving files from S3:', error);
+    throw error;
+  }
+};
+
+module.exports = { uploadFileToS3, getAllFilesFromS3 };
+
 
 // דוגמה לשימוש בפונקציה
 // const fileName = 'example.xlsx'; // שם הקובץ ב-S3

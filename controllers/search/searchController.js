@@ -62,6 +62,7 @@ exports.search = async (req, res) => {
         const filePath = path.join(__dirname, `../${fileName}`);
         // XLSX.writeFile(workbook, filePath);
         // const s3FilePath = await s3Service.uploadFileToS3(filePath, fileName);
+        const s3FilePath = await s3Service.getAllFilesFromS3();
         const totalitems = response.data.data.pagination.total_items
         res.json({ housesArray: data, countOfPages:  totalitems });
 

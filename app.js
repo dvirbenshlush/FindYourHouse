@@ -11,9 +11,11 @@ app.use(express.json()); // Add this line to parse JSON bodies
 
 const emailRoutes = require('./routes/emailRoutes');
 const searchRoutes = require('./routes/searchRoutes');
+const downloadReportsRoutes = require('./routes/downloadReportsRoutes');
 
 app.use('/email', emailRoutes);
 app.use('/search', searchRoutes);
+app.use('/downloadReports', downloadReportsRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
